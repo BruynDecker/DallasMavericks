@@ -1,0 +1,81 @@
+/* Root color palette based on Mavericks brand */
+:root {
+  --mavs-navy: #002B5E;
+  --mavs-blue: #007DC5;
+  --mavs-silver: #B8B8B8;
+  --mavs-white: #ffffff;
+  --mavs-black: #000000;
+
+  --font-sans: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background-color: var(--mavs-white);
+  color: var(--mavs-black);
+  width: 100vw; /* Full screen width */
+
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--mavs-navy);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+a {
+  color: var(--mavs-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.card {
+  background: var(--mavs-white);
+  border: 1px solid var(--mavs-silver);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 20px rgba(0, 43, 94, 0.15);
+}
+
+.table-cell-good {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.table-cell-bad {
+  background-color: #ffebee;
+  color: #c62828;
+  font-weight: bold;
+}
+
+.sort-select {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--mavs-silver);
+  background-color: var(--mavs-white);
+  color: var(--mavs-navy);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.scout-table th,
+.scout-table td {
+  font-size: 0.9rem;
+  text-align: center;
+}
