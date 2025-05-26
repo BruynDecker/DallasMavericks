@@ -88,7 +88,7 @@ a:hover {
 
 /* === Hero Banner === */
 .hero-banner {
-  width: 100%;
+  width: 100vw;
   background-color: var(--mavs-navy);
   color: var(--mavs-white);
   padding: 1rem 2rem;
