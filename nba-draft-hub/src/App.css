@@ -15,8 +15,6 @@ body {
   font-family: var(--font-sans);
   background-color: var(--mavs-white);
   color: var(--mavs-black);
-  width: 100vw; /* Full screen width */
-
 }
 
 h1, h2, h3, h4, h5 {
