@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './BigBoard.css';
+
 import {
   Card, CardContent, Typography,
   Table, TableHead, TableRow, TableCell, TableBody,
@@ -36,46 +38,40 @@ function BigBoard({ players }) {
   });
 
   return (
-    <Box sx={{ px: 4, py: 3 }}>
-      <Typography variant="h4" gutterBottom fontWeight="bold">Scout Rankings</Typography>
+<Box className="bigboard-container">
+  <Typography className="bigboard-header">Scout Rankings</Typography>
 
-      <Box sx={{ mb: 4, maxWidth: 300 }}>
-        <Typography variant="subtitle1" sx={{ mb: 1 }}>Sort by:</Typography>
-        <Select
-          value={sortKey}
-          onChange={(e) => setSortKey(e.target.value)}
-          fullWidth
-          variant="outlined"
-          size="small"
-        >
-          <MenuItem value="Average">Average Rank</MenuItem>
-          {scoutNames.map(scout => (
-            <MenuItem key={scout} value={scout}>{scout}</MenuItem>
-          ))}
-        </Select>
-      </Box>
+  <Box className="bigboard-sort">
+    <Typography variant="subtitle1" sx={{ mb: 1 }}>Sort by:</Typography>
+    <Select
+      value={sortKey}
+      onChange={(e) => setSortKey(e.target.value)}
+      fullWidth
+      variant="outlined"
+      size="small"
+    >
+      <MenuItem value="Average">Average Rank</MenuItem>
+      {scoutNames.map(scout => (
+        <MenuItem key={scout} value={scout}>{scout}</MenuItem>
+      ))}
+    </Select>
+  </Box>
 
-      <Grid container spacing={3}>
-        {sortedPlayers.map(player => {
-          const avg = getAverageRank(player.rankings);
-          return (
-            <Grid item xs={12} sm={6} md={4} key={player.playerId}>
-              <Card
-                sx={{
-                  borderRadius: 3,
-                  transition: '0.3s',
-                  '&:hover': { boxShadow: 6 },
-                }}
-              >
-                <CardContent>
-                  <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>
-                    <Link to={`/player/${player.playerId}`} style={{ textDecoration: 'none', color: '#1976d2' }}>
-                      {player.firstName} {player.lastName}
-                    </Link>
-                  </Typography>
-                  <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-                    {player.currentTeam} — Avg Rank: <b>{avg?.toFixed(2) ?? 'N/A'}</b>
-                  </Typography>
+  <Grid container spacing={3}>
+    {sortedPlayers.map(player => {
+      const avg = getAverageRank(player.rankings);
+      return (
+        <Grid item xs={12} sm={6} md={4} key={player.playerId}>
+          <Card className="bigboard-card">
+            <CardContent>
+              <Typography variant="h6" className="bigboard-player-name">
+                <Link to={`/player/${player.playerId}`}>
+                  {player.firstName} {player.lastName}
+                </Link>
+              </Typography>
+              <Typography className="bigboard-team">
+                {player.currentTeam} — Avg Rank: <b>{avg?.toFixed(2) ?? 'N/A'}</b>
+              </Typography>
 
                   <Table size="small">
                     <TableHead>

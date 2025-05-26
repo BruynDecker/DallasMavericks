@@ -1,9 +1,11 @@
+// PlayerProfile.jsx
 import { useParams, Link } from 'react-router-dom';
 import { useState } from 'react';
 import {
   Typography, TextField, Button, Card, CardContent,
   Table, TableHead, TableRow, TableCell, TableBody, Box
 } from '@mui/material';
+import './PlayerProfile.css';
 
 function PlayerProfile({ players }) {
   const { id } = useParams();
@@ -31,45 +33,74 @@ function PlayerProfile({ players }) {
   const scoutNames = Object.keys(player.rankings || {}).filter(name => name !== "playerId");
 
   return (
-    <Box className="container" sx={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-      <Link to="/" style={{ color: '#007DC5', fontWeight: 500 }}>← Back to Scout Rankings</Link>
+    <Box className="player-container">
+      <Link to="/" className="player-backlink">← Back to Scout Rankings</Link>
 
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
-          gap: '2rem',
-          marginTop: '2rem'
-        }}
-      >
-        {/* Left Column: Photo + Bio */}
-        <Box sx={{ width: { md: '35%' } }}>
-          <img
-            src={player.photoUrl}
-            alt={`${player.firstName} ${player.lastName}`}
-            style={{ width: '100%', borderRadius: '12px', marginBottom: '1rem' }}
-          />
-          <Typography variant="h4" fontWeight={700} gutterBottom>
-            {player.firstName} {player.lastName}
-          </Typography>
-          <Typography variant="subtitle1" gutterBottom color="text.secondary">
-            {player.currentTeam}
-          </Typography>
-          <Typography variant="body2">Birthdate: {player.birthDate}</Typography>
-          <Typography variant="body2">Hometown: {player.homeTown}, {player.homeState}</Typography>
-          <Typography variant="body2">High School: {player.highSchool} ({player.highSchoolState})</Typography>
-          <Typography variant="body2">Height: {player.measurement.heightShoes}"</Typography>
-          <Typography variant="body2">Wingspan: {player.measurement.wingspan}"</Typography>
+      <Box className="profile-grid">
+        <Box className="profile-left">
+          <Box className="profile-header">
+            <img src={player.photoUrl} alt={player.firstName} />
+            <Box className="profile-info">
+              <Typography variant="h5" fontWeight={700}>
+                {player.firstName} {player.lastName}
+              </Typography>
+              <Typography variant="subtitle2" color="text.secondary">
+                {player.currentTeam}
+              </Typography>
+              <Typography variant="body2">Rank Avg: {avgRank?.toFixed(2) ?? 'N/A'}</Typography>
+              <Typography variant="body2">Ht: {player.measurement.heightShoes}" | Wing: {player.measurement.wingspan}"</Typography>
+              <Typography variant="body2">Birth: {player.birthDate}</Typography>
+              <Typography variant="body2">From: {player.homeTown}, {player.homeState}</Typography>
+            </Box>
+          </Box>
         </Box>
 
-        {/* Right Column: Rankings, Stats, Reports */}
-        <Box sx={{ flex: 1 }}>
-          {/* Scout Rankings */}
-          <Typography variant="h6" fontWeight={600} sx={{ mt: 2 }}>Scout Rankings</Typography>
-          <Typography variant="body2" color="text.secondary" gutterBottom>
-            Average Rank: {avgRank?.toFixed(2) ?? 'N/A'}
-          </Typography>
+        <Box className="profile-center">
+                      <Typography variant="h6" className="player-section-title">Full Stats</Typography>
 
+          <Box className="profile-stats-toggle">
+            <TextField
+              select
+              label="Stat Mode"
+              value={statMode}
+              onChange={(e) => setStatMode(e.target.value)}
+              SelectProps={{ native: true }}
+              size="small"
+              fullWidth
+            >
+              <option value="perGame">Per Game</option>
+              <option value="total">Totals</option>
+            </TextField>
+
+            <Typography variant="body2" sx={{ mt: 1 }}>
+              PTS: {statMode === 'perGame' ? player.seasonStats.PTS : (player.seasonStats.PTS * player.seasonStats.GP).toFixed(1)}  | 
+              AST: {statMode === 'perGame' ? player.seasonStats.AST : (player.seasonStats.AST * player.seasonStats.GP).toFixed(1)}  | 
+              REB: {statMode === 'perGame' ? player.seasonStats.TRB : (player.seasonStats.TRB * player.seasonStats.GP).toFixed(1)}
+            </Typography>
+          </Box>
+
+          <ul className="stat-list">
+            <li><strong>Games Played:</strong> {player.seasonStats.GP}</li>
+            <li><strong>Minutes Per Game (MP):</strong> {player.seasonStats.MP}</li>
+            <li><strong>Points:</strong> {statMode === 'perGame' ? player.seasonStats.PTS : (player.seasonStats.PTS * player.seasonStats.GP).toFixed(1)}</li>
+            <li><strong>Assists:</strong> {statMode === 'perGame' ? player.seasonStats.AST : (player.seasonStats.AST * player.seasonStats.GP).toFixed(1)}</li>
+            <li><strong>Rebounds:</strong> {statMode === 'perGame' ? player.seasonStats.TRB : (player.seasonStats.TRB * player.seasonStats.GP).toFixed(1)}</li>
+            <li>• ORB: {player.seasonStats.ORB}</li>
+            <li>• DRB: {player.seasonStats.DRB}</li>
+            <li><strong>Steals:</strong> {player.seasonStats.STL}</li>
+            <li><strong>Blocks:</strong> {player.seasonStats.BLK}</li>
+            <li><strong>Turnovers:</strong> {player.seasonStats.TOV}</li>
+            <li><strong>Personal Fouls:</strong> {player.seasonStats.PF}</li>
+            <li><strong>FGM / FGA:</strong> {player.seasonStats.FGM} / {player.seasonStats.FGA} ({player.seasonStats["FG%"]}%)</li>
+            <li>• 2PT: {player.seasonStats.FG2M} / {player.seasonStats.FG2A} ({player.seasonStats["FG2%"]}%)</li>
+            <li>• 3PT: {player.seasonStats["3PM"]} / {player.seasonStats["3PA"]} ({player.seasonStats["3P%"]}%)</li>
+            <li><strong>FT:</strong> {player.seasonStats.FT} / {player.seasonStats.FTA} ({player.seasonStats.FTP}%)</li>
+            <li><strong>eFG%:</strong> {player.seasonStats["eFG%"]}%</li>
+          </ul>
+        </Box>
+
+        <Box className="profile-right">
+          <Typography variant="h6" className="player-section-title">Scout Rankings</Typography>
           <Table size="small" sx={{ mb: 3 }}>
             <TableHead>
               <TableRow>
@@ -100,51 +131,9 @@ function PlayerProfile({ players }) {
             </TableBody>
           </Table>
 
-          {/* Season Stats */}
-          <Typography variant="h6" fontWeight={600}>Season Stats</Typography>
-          <TextField
-            select
-            label="Stat Mode"
-            value={statMode}
-            onChange={(e) => setStatMode(e.target.value)}
-            SelectProps={{ native: true }}
-            margin="dense"
-            fullWidth
-            sx={{ maxWidth: '300px', mb: 2 }}
-          >
-            <option value="perGame">Average Per Game</option>
-            <option value="total">Season Totals</option>
-          </TextField>
-
-          <ul style={{ paddingLeft: '1.2rem' }}>
-            <li>Games Played: {player.seasonStats.GP}</li>
-            <li>
-              Points: {
-                statMode === 'perGame'
-                  ? player.seasonStats.PTS
-                  : (player.seasonStats.PTS * player.seasonStats.GP).toFixed(1)
-              }
-            </li>
-            <li>
-              Assists: {
-                statMode === 'perGame'
-                  ? player.seasonStats.AST
-                  : (player.seasonStats.AST * player.seasonStats.GP).toFixed(1)
-              }
-            </li>
-            <li>
-              Rebounds: {
-                statMode === 'perGame'
-                  ? player.seasonStats.TRB
-                  : (player.seasonStats.TRB * player.seasonStats.GP).toFixed(1)
-              }
-            </li>
-          </ul>
-
-          {/* Reports */}
-          <Typography variant="h6" fontWeight={600} sx={{ mt: 3 }}>Scouting Reports</Typography>
+          <Typography variant="h6" className="player-section-title">Scouting Reports</Typography>
           {reports.map((r, i) => (
-            <Card key={i} sx={{ mb: 1 }}>
+            <Card key={i} className="scout-card">
               <CardContent>
                 <Typography variant="subtitle2" fontWeight={600}>{r.scout}:</Typography>
                 <Typography>{r.report}</Typography>
@@ -152,7 +141,6 @@ function PlayerProfile({ players }) {
             </Card>
           ))}
 
-          {/* Add New Report */}
           <Box sx={{ mt: 2 }}>
             <TextField
               label="New Scouting Report"

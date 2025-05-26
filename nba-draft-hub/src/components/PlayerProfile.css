@@ -1,0 +1,89 @@
+/* PlayerProfile.css */
+.player-container {
+  padding: 2rem 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.player-backlink {
+  color: #007DC5;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.profile-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.profile-left,
+.profile-center,
+.profile-right {
+  flex: 1 1 30%;
+  min-width: 300px;
+  max-width: 32%;
+}
+
+.profile-header {
+  display: flex;
+  gap: 1rem;
+}
+
+.profile-header img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.profile-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.profile-stats-toggle {
+  margin-top: 1rem;
+}
+
+.player-section-title {
+  margin-top: 2rem;
+  font-weight: 600;
+  color: #002B5E;
+  border-bottom: 2px solid #B8B8B8;
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.stat-list li {
+  margin-bottom: 0.3rem;
+}
+
+.scout-card {
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 1px solid #B8B8B8;
+  background-color: white;
+}
+
+@media (max-width: 900px) {
+  .profile-grid {
+    flex-direction: column;
+  }
+
+  .profile-left,
+  .profile-center,
+  .profile-right {
+    max-width: 100%;
+  }
+}

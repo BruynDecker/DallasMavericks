@@ -1,4 +1,4 @@
-/* Root color palette based on Mavericks brand */
+/* === Mavericks Theme === */
 :root {
   --mavs-navy: #002B5E;
   --mavs-blue: #007DC5;
@@ -15,12 +15,14 @@ body {
   font-family: var(--font-sans);
   background-color: var(--mavs-white);
   color: var(--mavs-black);
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5 {
   color: var(--mavs-navy);
   font-weight: 700;
   margin-bottom: 0.5rem;
+  line-height: 1.3;
 }
 
 a {
@@ -32,18 +34,21 @@ a:hover {
   text-decoration: underline;
 }
 
+/* === Card Styling === */
 .card {
   background: var(--mavs-white);
   border: 1px solid var(--mavs-silver);
   border-radius: 12px;
   padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 43, 94, 0.05);
   transition: box-shadow 0.3s ease;
 }
 
 .card:hover {
-  box-shadow: 0 4px 20px rgba(0, 43, 94, 0.15);
+  box-shadow: 0 6px 24px rgba(0, 43, 94, 0.15);
 }
 
+/* === Table Cell Highlights === */
 .table-cell-good {
   background-color: #e8f5e9;
   color: #2e7d32;
@@ -56,6 +61,7 @@ a:hover {
   font-weight: bold;
 }
 
+/* === Sort Dropdown === */
 .sort-select {
   font-size: 1rem;
   font-weight: 500;
@@ -66,14 +72,97 @@ a:hover {
   color: var(--mavs-navy);
 }
 
+/* === Container === */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
 }
 
+/* === Scout Table === */
 .scout-table th,
 .scout-table td {
   font-size: 0.9rem;
   text-align: center;
+}
+
+/* === Hero Banner === */
+.hero-banner {
+  width: 100%;
+  background-color: var(--mavs-navy);
+  color: var(--mavs-white);
+  padding: 1rem 2rem;
+  border-bottom: 4px solid var(--mavs-blue);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hero-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  background-color: var(--mavs-white);
+  padding: 5px;
+}
+
+.hero-subtitle {
+  font-size: 0.9rem;
+  color: var(--mavs-silver);
+  margin-top: 4px;
+}
+
+.hero-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* === Scouting Reports Section === */
+.report-card {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .hero-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .sort-select {
+    font-size: 0.9rem;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  .MuiTableCell-root {
+    padding: 0.3rem;
+  }
+
+  ul {
+    padding-left: 1rem;
+  }
+
+  .card {
+    padding: 0.8rem;
+  }
 }
