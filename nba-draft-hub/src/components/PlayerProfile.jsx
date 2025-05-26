@@ -32,6 +32,9 @@ function PlayerProfile({ players }) {
   const avgRank = getAverageRank(player.rankings || {});
   const scoutNames = Object.keys(player.rankings || {}).filter(name => name !== "playerId");
 
+  const statLabel = statMode === 'perGame' ? '(per game)' : '(total)';
+  const getStat = (value) => statMode === 'perGame' ? value : (value * player.seasonStats.GP).toFixed(1);
+
   return (
     <Box className="player-container">
       <Link to="/" className="player-backlink">← Back to Scout Rankings</Link>
@@ -56,7 +59,7 @@ function PlayerProfile({ players }) {
         </Box>
 
         <Box className="profile-center">
-                      <Typography variant="h6" className="player-section-title">Full Stats</Typography>
+          <Typography variant="h6" className="player-section-title">Full Stats {statLabel}</Typography>
 
           <Box className="profile-stats-toggle">
             <TextField
@@ -71,30 +74,24 @@ function PlayerProfile({ players }) {
               <option value="perGame">Per Game</option>
               <option value="total">Totals</option>
             </TextField>
-
-            <Typography variant="body2" sx={{ mt: 1 }}>
-              PTS: {statMode === 'perGame' ? player.seasonStats.PTS : (player.seasonStats.PTS * player.seasonStats.GP).toFixed(1)}  | 
-              AST: {statMode === 'perGame' ? player.seasonStats.AST : (player.seasonStats.AST * player.seasonStats.GP).toFixed(1)}  | 
-              REB: {statMode === 'perGame' ? player.seasonStats.TRB : (player.seasonStats.TRB * player.seasonStats.GP).toFixed(1)}
-            </Typography>
           </Box>
 
           <ul className="stat-list">
             <li><strong>Games Played:</strong> {player.seasonStats.GP}</li>
-            <li><strong>Minutes Per Game (MP):</strong> {player.seasonStats.MP}</li>
-            <li><strong>Points:</strong> {statMode === 'perGame' ? player.seasonStats.PTS : (player.seasonStats.PTS * player.seasonStats.GP).toFixed(1)}</li>
-            <li><strong>Assists:</strong> {statMode === 'perGame' ? player.seasonStats.AST : (player.seasonStats.AST * player.seasonStats.GP).toFixed(1)}</li>
-            <li><strong>Rebounds:</strong> {statMode === 'perGame' ? player.seasonStats.TRB : (player.seasonStats.TRB * player.seasonStats.GP).toFixed(1)}</li>
-            <li>• ORB: {player.seasonStats.ORB}</li>
-            <li>• DRB: {player.seasonStats.DRB}</li>
-            <li><strong>Steals:</strong> {player.seasonStats.STL}</li>
-            <li><strong>Blocks:</strong> {player.seasonStats.BLK}</li>
-            <li><strong>Turnovers:</strong> {player.seasonStats.TOV}</li>
-            <li><strong>Personal Fouls:</strong> {player.seasonStats.PF}</li>
+            <li><strong>Minutes:</strong> {getStat(player.seasonStats.MP)} {statLabel}</li>
+            <li><strong>Points:</strong> {getStat(player.seasonStats.PTS)} {statLabel}</li>
+            <li><strong>Assists:</strong> {getStat(player.seasonStats.AST)} {statLabel}</li>
+            <li><strong>Rebounds:</strong> {getStat(player.seasonStats.TRB)} {statLabel}</li>
+            <li><strong>• Offensive Rebounds:</strong> {getStat(player.seasonStats.ORB)} {statLabel}</li>
+            <li><strong>• Defensive Rebounds:</strong> {getStat(player.seasonStats.DRB)} {statLabel}</li>
+            <li><strong>Steals:</strong> {getStat(player.seasonStats.STL)} {statLabel}</li>
+            <li><strong>Blocks:</strong> {getStat(player.seasonStats.BLK)} {statLabel}</li>
+            <li><strong>Turnovers:</strong> {getStat(player.seasonStats.TOV)} {statLabel}</li>
+            <li><strong>Personal Fouls:</strong> {getStat(player.seasonStats.PF)} {statLabel}</li>
             <li><strong>FGM / FGA:</strong> {player.seasonStats.FGM} / {player.seasonStats.FGA} ({player.seasonStats["FG%"]}%)</li>
-            <li>• 2PT: {player.seasonStats.FG2M} / {player.seasonStats.FG2A} ({player.seasonStats["FG2%"]}%)</li>
-            <li>• 3PT: {player.seasonStats["3PM"]} / {player.seasonStats["3PA"]} ({player.seasonStats["3P%"]}%)</li>
-            <li><strong>FT:</strong> {player.seasonStats.FT} / {player.seasonStats.FTA} ({player.seasonStats.FTP}%)</li>
+            <li><strong>• 2PT:</strong> {player.seasonStats.FG2M} / {player.seasonStats.FG2A} ({player.seasonStats["FG2%"]}%)</li>
+            <li><strong>• 3PT:</strong> {player.seasonStats["3PM"]} / {player.seasonStats["3PA"]} ({player.seasonStats["3P%"]}%)</li>
+            <li><strong>Free Throws:</strong> {player.seasonStats.FT} / {player.seasonStats.FTA} ({player.seasonStats.FTP}%)</li>
             <li><strong>eFG%:</strong> {player.seasonStats["eFG%"]}%</li>
           </ul>
         </Box>
